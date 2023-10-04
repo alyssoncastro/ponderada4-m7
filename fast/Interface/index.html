@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
+        <button onclick = Login() value="Login">Enviar</button>
+    </form>
+    </div>
+
+
+    <script>
+        function Login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            console.log('Username:', username);
+            console.log('Password:', password);
+    
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.access_token) {
+                localStorage.setItem('access_token', data.access_token);
+                console.log("oi, cheguei aqui");
+                
+                fetch('/validar', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${data.access_token}` wha
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log('Token válido!');
+                        fetch('/page',{
+                          headers: {
+                        Authorization: `Bearer ${data.access_token}`
+                    }
+                        })
+                        window.location.href = '/page';
+                    } else {
+                        console.log('Token inválido.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na requisição:', error);
+                });
+            */} else {
+                console.log('Erro ao fazer login:', data.error);
+                alert('Erro ao fazer login.');
+            }
+            })
+          }
+    </script>
+
+
+</body>
+</html>
