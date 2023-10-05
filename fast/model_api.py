@@ -31,10 +31,15 @@ class OutputData(BaseModel):
 # Define predict function
 @app.post("/predict")
 async def predict(input_data: InputData):
-    # Fazer a predição do resultado do paciente
-    prediction = model.predict(input_data.dict())
-    # Criar um objeto OutputData com a predição
+    # Convert InputData object to trained model object
+    trained_model = model.predict(input_data.dict())
+
+    # Make prediction
+    prediction = trained_model.predict()
+
+    # Create an OutputData object with the prediction
     output_data = OutputData(prediction=prediction)
+
     return output_data
 
 
