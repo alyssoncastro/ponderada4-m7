@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 import pandas as pd
 from pycaret.classification import load_model, predict_model
 from fastapi import FastAPI
@@ -30,11 +31,27 @@ class OutputData(BaseModel):
 # Define predict function
 @app.post("/predict")
 async def predict(input_data: InputData):
-    # Convert input_data dictionary to a DataFrame
-    input_df = pd.DataFrame([input_data.dict()])
-    prediction = predict_model(model, data=input_df)['Label'][0]
+    # Convert dict to DataFrame
+    input_data_df = pd.DataFrame(input_data.dict())
+
+    # Check if all columns are present in the input data DataFrame
+    missing_columns = set(model.features) - set(input_data_df.columns)
+
+    if missing_columns:
+        raise ValueError(f"The following columns are missing from the input data DataFrame: {missing_columns}")
+
+    # Check if the model is trained
+    if not model.trained:
+        raise ValueError("The model is not trained. Please train the model before making predictions.")
+
+    # Make prediction
+    prediction = predict_model(model, input_data_df)['Label'][0]
+
+    # Create an OutputData object with the prediction
     output_data = OutputData(prediction=prediction)
+
     return output_data
 
+
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="00.00.0.0", port=8000)
