@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Set the working directory in the container
-WORKDIR /front
+WORKDIR /Interface
 
 # Upgrade pip
 RUN pip install --upgrade pip

@@ -2,24 +2,36 @@ version: '3.1'
 
 services:
 
-  # db:
-  #   build:
-  #     context: ./postgre
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   environment:
-  #     POSTGRES_PASSWORD: 1984
-  #     POSTGRES_USER: alysson
-  #     POSTGRES_DB: postgres
-  #   ports:
-  #     - 5432:5432
-  #   container_name: bank
+  Interface:
+    build:
+      context: ./Interface
+      dockerfile: Dockerfile
+    restart: always
+    container_name: Interface
+    ports:
+      - "8100:8100"
+    depends_on:
+      - back
+
+  db:
+    build:
+      context: ./postgre
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 1984
+      POSTGRES_USER: alysson
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    container_name: bank
     
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
-  #   depends_on:
-  #     - db
-  #   container_name: adminer
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    container_name: adminer

@@ -1,5 +1,7 @@
 import streamlit as st
 import requests
+import pandas 
+import numpy
 import matplotlib.pyplot as plt
 
 # Título do aplicativo
