@@ -33,23 +33,16 @@ class OutputData(BaseModel):
 async def predict(input_data: InputData):
     # Convert dict to DataFrame with index
     input_data_df = pd.DataFrame(input_data.dict(), index=[0])
-
-    # Check if all columns are present in the input data DataFrame
-    missing_columns = set(model.features) - set(input_data_df.columns)
-
-    if missing_columns:
-        raise ValueError(f"The following columns are missing from the input data DataFrame: {missing_columns}")
-
-    # Check if the model is trained
-    if not model.trained:
-        raise ValueError("The model is not trained. Please train the model before making predictions.")
-
+    # Get the list of features from the model
+    features = model.get_features()
+    # Check if all features are present in the input data DataFrame
+    missing_features = set(features) - set(input_data_df.columns)
+    if missing_features:
+        raise ValueError(f"The following features are missing from the input data DataFrame: {missing_features}")
     # Make prediction
     prediction = predict_model(model, input_data_df)['Label'][0]
-
     # Create an OutputData object with the prediction
     output_data = OutputData(prediction=prediction)
-
     return output_data
 
 
