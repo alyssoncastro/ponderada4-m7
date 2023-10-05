@@ -35,7 +35,7 @@ async def predict(input_data: InputData):
     trained_model = model.predict(input_data.dict())
 
     # Make prediction
-    prediction = trained_model.predict()
+    prediction = trained_model.iloc[:, -1]
 
     # Create an OutputData object with the prediction
     output_data = OutputData(prediction=prediction)
