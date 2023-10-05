@@ -31,8 +31,8 @@ class OutputData(BaseModel):
 # Define predict function
 @app.post("/predict")
 async def predict(input_data: InputData):
-    # Convert dict to DataFrame
-    input_data_df = pd.DataFrame(input_data.dict())
+    # Convert dict to DataFrame with index
+    input_data_df = pd.DataFrame(input_data.dict(), index=[0])
 
     # Check if all columns are present in the input data DataFrame
     missing_columns = set(model.features) - set(input_data_df.columns)
