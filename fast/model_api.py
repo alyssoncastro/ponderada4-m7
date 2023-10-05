@@ -29,12 +29,14 @@ class OutputData(BaseModel):
     prediction: int
 
 # Define predict function
-@app.post("/predict", response_model=OutputData)
-def predict(data: InputData):
-    data_dict = data.dict()
-    data_df = pd.DataFrame([data_dict])
-    predictions = predict_model(model, data=data_df)
-    return {"prediction": predictions["Label"].iloc[0]}
+@app.post("/predict")
+async def predict(input_data: InputData):
+    # Fazer a predição do resultado do paciente
+    prediction = model.predict(input_data.dict())
+    # Criar um objeto OutputData com a predição
+    output_data = OutputData(prediction=prediction)
+    return output_data
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
