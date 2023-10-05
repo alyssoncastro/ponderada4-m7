@@ -14,7 +14,6 @@ model = load_model("model_api")
 
 # Create input/output pydantic models
 class InputData(BaseModel):
-    Unnamed_0: int
     Outbreak_Associated: str
     Neighbourhood_Name: str
     FSA: str
@@ -25,9 +24,6 @@ class InputData(BaseModel):
     Currently_Hospitalized: int
     Currently_in_ICU: int
     Currently_Intubated: int
-    Ever_Hospitalized: int
-    Ever_in_ICU: int
-    Ever_Intubated: int
 
 class OutputData(BaseModel):
     prediction: int
