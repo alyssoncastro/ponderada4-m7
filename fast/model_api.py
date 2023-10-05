@@ -30,12 +30,10 @@ class OutputData(BaseModel):
 # Define predict function
 @app.post("/predict")
 async def predict(input_data: InputData):
-    # Make prediction using the model
-    prediction = predict_model(model, input_data.dict())['Label'][0]
-
-    # Create an OutputData object with the prediction
+    # Convert input_data dictionary to a DataFrame
+    input_df = pd.DataFrame([input_data.dict()])
+    prediction = predict_model(model, data=input_df)['Label'][0]
     output_data = OutputData(prediction=prediction)
-
     return output_data
 
 if __name__ == "__main__":
