@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import pandas as pd
 from pycaret.classification import load_model, predict_model
 from fastapi import FastAPI
@@ -31,17 +30,13 @@ class OutputData(BaseModel):
 # Define predict function
 @app.post("/predict")
 async def predict(input_data: InputData):
-    # Convert InputData object to trained model object
-    trained_model = model.predict(input_data.dict())
-
-    # Make prediction
-    prediction = trained_model.iloc[:, -1]
+    # Make prediction using the model
+    prediction = predict_model(model, input_data.dict())['Label'][0]
 
     # Create an OutputData object with the prediction
     output_data = OutputData(prediction=prediction)
 
     return output_data
-
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
