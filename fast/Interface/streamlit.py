@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 st.title('Classificação do Modelo COVID-19 com Base na API')
 
 # Fazer uma solicitação à API (substitua a URL pela URL real da sua API)
-api_url = "http://54.211.0.252:8000/predict"  # Substitua pela URL da sua API
+api_url = "http://54.211.0.252:8000/predict" 
 data = {
     "feature1": 1,
     "feature2": 2,

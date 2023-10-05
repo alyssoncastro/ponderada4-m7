@@ -80,7 +80,7 @@ Então, para rodar o API, precisa-se que vá até o diretorio ``cd/ponderada4_m7
 ```python
 uvicorn model_api:app --host 0.0.0.0 --port 8000
 ```
-veja o vídeo da API: 
+veja o vídeo da API: https://drive.google.com/file/d/17RMqgpOFB9WzU1ysolCUcOPghrqdYbSu/view?usp=sharing
 
 Então, para rodar o Streamlit, precisa-se que vá até o diretorio ``cd/ponderada4_m7/fast/Interface`` e aplique o comando:
 
@@ -88,5 +88,6 @@ Então, para rodar o Streamlit, precisa-se que vá até o diretorio ``cd/pondera
 streamlit run streamlit.py
 ```
 
-veja o vídeo do Dashboard:
- 
+veja o vídeo do Dashboard: https://drive.google.com/file/d/1TsLaCUHCMo6EU0Czv-myeCHvCb2VH-Z8/view?usp=sharing
+
+### LEIA A DOCUMENTAÇÃO!
